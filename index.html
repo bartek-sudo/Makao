@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makao</title>
+    <link rel="stylesheet" href="style-kss.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+</head>
+<body>
+
+
+    <div id="logo" onclick="openMenu()">
+        <h1>MAKAO</h1>
+        
+    </div>
+    
+    <div id="menu-modal">
+        <div id="menu-content">
+            <span id="close" onclick="closeMenu()">&times;</span>
+            <!-- Tutaj dodaj treść swojego menu -->
+            <div id="menu">
+                <h1>MENU</h1>
+                <button onclick="showForm()">Nowa gra</button><br>
+                <button onclick="loadPreviousGame()">Wczytaj poprzednią grę</button>
+            </div>
+            <form id="new-game-form" style="display: none;">
+                <label for="player1Name">Gracz 1:</label>
+                <input type="text" id="player1Name" required value="a" ><br>
+    
+                <label for="player2Name">Gracz 2:</label>
+                <input type="text" id="player2Name" required value="b"><br>
+
+                <label for="player3Name">Gracz 3:</label>
+                <input type="text" id="player3Name" required value="c"><br>
+
+                <label for="player4Name">Gracz 4:</label>
+                <input type="text" id="player4Name" required value="d"><br>
+            
+                <button type="button" onclick="startNewGame()">Rozpocznij grę</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="message"></div>
+    <div id="game-container">
+        <div id="board">
+            <!-- Placeholder for game board -->
+            <div id="deck" class="sector" style="display: none;">
+                <div class="text">Dobierz Kartę</div>
+                <div class="reversedCard">&#1421;</div>
+            </div>
+            <div id="stack"></div>
+            <div id="player1">
+                <div id="player1-name" class="text"></div>
+                <div id="player1-hand"></div>
+            </div>
+            <div id="player2" class="sector">
+                <div id="player2-name" class="text"></div>
+                <div id="player2-hand"></div>
+            </div>
+            <div id="player3" class="sector">
+                <div id="player3-name" class="text"></div>
+                <div id="player3-hand"></div>
+            </div>
+            <div id="player4" class="sector">
+                <div id="player4-name" class="text"></div>
+                <div id="player4-hand"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,836 @@
+/*
+# Strona Główna
+
+Strona główna aplikacji Makao.
+
+## Styl Strony
+
+- Font rodziny: 'Arial', sans-serif.
+- Tło strony: #1f7e12.
+- Zerowanie marginesu i paddingu dla body.
+
+Style guide: components.body
+
+*/
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1f7e12;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+# Logo
+
+Logo na stronie głównej.
+
+## Styl Logo
+
+- Szerokość: 100%.
+- Wyśrodkowanie tekstu.
+- Kursor wskazujący na możliwość kliknięcia.
+- Padding: 20px na górze i na dole.
+- Tło: #15590c.
+- Kolor tekstu: #cccccc.
+
+markup:
+<div id="logo"">
+        <h1>MAKAO</h1>
+        
+    </div>
+
+Style guide: menu.logo
+
+
+*/
+
+#logo {
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding: 20px 0;
+    background-color: #15590c;
+    color: #cccccc;
+}
+
+/*
+# Menu Modal
+
+Modalne okno menu.
+
+## Styl Menu Modal
+
+- Ukryte początkowo.
+- Pozycja: fixed, na całą szerokość i wysokość ekranu.
+- Tło: półprzezroczyste czarne.
+
+markup:
+        <div id="menu-content" style="position: relative;top: 100px;>
+            <span id="close" onclick="closeMenu()">&times;</span>
+            <!-- Tutaj dodaj treść swojego menu -->
+            <div id="menu">
+                <h1>MENU</h1>
+                <button onclick="showForm()">Nowa gra</button><br>
+                <button onclick="loadPreviousGame()">Wczytaj poprzednią grę</button>
+            </div>
+        </div>
+
+Style guide: menu.menu-modal
+    
+*/
+
+/* ## Styl Zawartości Menu
+
+- Pozycja: absolutna, wyśrodkowana.
+- Padding: 20px.
+- Tło: białe.
+- Zaokrąglenie rogów: 10px.
+- Cień: 10px rgba(0, 0, 0, 0.3).
+- Tekst: wyśrodkowany.
+
+Style guide: menu.menu-content
+
+*/
+
+
+
+/*
+## Styl Przycisku Zamknięcia
+
+- Pozycja: absolutna, górny prawy róg.
+- Rozmiar czcionki: 20px.
+- Kursor wskazujący.
+
+Style guide: menu.close
+*/
+
+#menu-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#menu-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+}
+
+/*
+# Menu
+
+Stylizacja menu.
+
+## Styl Nagłówka Menu
+
+- Kolor tekstu: #333.
+
+Style guide: menu.menu-header
+    
+    */
+
+/*
+## Styl Przycisków Menu
+
+- Tło: #4CAF50.
+- Kolor tekstu: biały.
+- Padding: 10px 20px.
+- Brak obramowania.
+- Zaokrąglenie rogów: 5px.
+- Margines: 10px.
+- Kursor wskazujący.
+
+Style guide: menu.menu-button
+*/
+
+#menu h1 {
+    color: #333;
+}
+
+#menu button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#menu button:hover {
+    background-color: #45a049;
+}
+
+/*
+# Formularz Nowej Gry
+
+Stylizacja formularza nowej gry.
+
+## Styl Etykiet i Pól Wejściowych
+
+- Wyświetlanie blokowe.
+- Margines: 10px na górze i na dole.
+
+markup:
+<div id="menu-content" style="position: relative;top: 200px;>
+            <span id="close" onclick="closeMenu()">&times;</span>
+            <form id="new-game-form">
+                <label for="player1Name">Gracz 1:</label>
+                <input type="text" id="player1Name" required value="a" ><br>
+                <label for="player2Name">Gracz 2:</label>
+                <input type="text" id="player2Name" required value="b"><br>
+                <label for="player3Name">Gracz 3:</label>
+                <input type="text" id="player3Name" required value="c"><br>
+                <label for="player4Name">Gracz 4:</label>
+                <input type="text" id="player4Name" required value="d"><br>
+                <button type="button">Rozpocznij grę</button>
+            </form>
+        </div>
+
+Style guide: menu.form-label
+*/
+
+/*
+## Styl Przycisku Formularza
+
+- Tło: #008CBA.
+
+Style guide: menu.form-button
+*/
+
+/*
+
+## Styl Hover dla Przycisku Formularza
+
+- Tło: #0077A3.
+
+Style guide: menu.form-button:hover
+*/
+
+#new-game-form label,
+#new-game-form input {
+    display: block;
+    margin: 10px 0;
+}
+
+#new-game-form button {
+    background-color: #008CBA;
+}
+
+#new-game-form button:hover {
+    background-color: #0077A3;
+}
+
+/*
+# Kontener Gry
+
+Kontener dla całej gry Makao.
+
+## Styl Kontenera Gry
+
+- Maksymalna szerokość: 80vw.
+- Wyśrodkowanie na ekranie.
+- Tło: #15590c.
+- Grubość ramki: 0.1vw, kolor: #646464.
+- Padding: 2vh.
+- Zaokrąglenie rogów: 0.5vw.
+- Cień: 0 0 1vw rgba(0, 0, 0, 0.1).
+
+Style guide: gameBoard.game-container
+*/
+
+#game-container {
+    max-width: 80vw;
+    margin: 2vh auto;
+    background-color: #15590c;
+    border: 0.1vw solid #646464;
+    padding: 2vh;
+    border-radius: 0.5vw;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
+}
+
+/*
+# Plansza Gry
+
+Plansza gry Makao.
+
+## Styl Planszy Gry
+
+- Margines górny: 2vh.
+- Wyświetlanie w siatce o trzech kolumnach i trzech wierszach.
+- Odstęp między elementami: 2vh.
+- Margines prawy: 6vw.
+
+Style guide: gameBoard.board
+*/
+
+#board {
+    margin-top: 2vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Trzy kolumny */
+    grid-template-rows: repeat(3, 1fr); /* Trzy wiersze */
+    gap: 2vh; /* Odstęp między elementami */
+    margin-right: 6vw;
+}
+
+/*
+# Gracze
+
+Pozycje graczy na planszy gry Makao.
+
+## Styl Graczy
+
+- Gracz 1: W kolumnie 2, wierszu 3.
+- Gracz 2: W kolumnie 1, wierszu 2.
+- Gracz 3: W kolumnie 2, wierszu 1.
+- Gracz 4: W kolumnie 3, wierszu 2.
+
+Style guide: gameBoard.player1
+*/
+
+#player1 {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+#player2 {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#player3 {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#player4 {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/*
+# Sektor
+
+Stylizacja sektora na planszy.
+
+## Styl Sektoru
+
+- Wyświetlanie w układzie kolumnowym.
+
+Style guide: gameBoard.sector
+
+*/
+
+.sector {
+    display:flex;
+    flex-direction: column;
+}
+
+/*
+# Tekst
+
+Stylizacja tekstu w sektorze.
+
+## Styl Tekstu
+
+- Wyśrodkowanie tekstu.
+- Rozmiar czcionki: 1.5rem.
+- Margines na dole: 0.5rem.
+- Margines na prawo: -6vw.
+
+Style guide: gameBoard.text
+
+*/
+
+.text {
+    text-align: center;
+    font-size: 1.5rem; 
+    margin-bottom: 0.5rem; 
+    margin-right: -6vw;
+}
+
+/*
+# Ręka Gracza
+
+Stylizacja ręki gracza.
+
+## Styl Ręki Gracza
+
+- Wyświetlanie w układzie poziomym.
+- Justyfikacja przestrzeni wokół elementów.
+
+Style guide: gameBoard.hand
+*/
+
+#player1-hand, #player2-hand, #player3-hand, #player4-hand {
+    display: flex;
+    justify-content: space-around;
+}
+
+/*
+# Stos Kart
+
+Stylizacja stosu kart.
+
+## Styl Stosu Kart
+
+- W kolumnie 2, wierszu 2.
+- Wyświetlanie w układzie poziomym.
+- Justyfikacja przestrzeni wokół elementów.
+
+Style guide: gameBoard.stack
+
+*/
+
+#stack {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    justify-content: space-around;
+}
+
+/*
+# Talia Kart
+
+Stylizacja talii kart.
+
+## Styl Talii Kart
+
+- W kolumnie 1, wierszu 1.
+- Wyświetlanie w układzie poziomym.
+- Wyśrodkowanie elementów.
+
+markup:
+<div id="deck" class="sector"">
+                <div class="text">Dobierz Kartę</div>
+                <div class="reversedCard">&#1421;</div>
+            </div>
+
+Style guide: gameBoard.deck
+*/
+
+#deck {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+}
+
+/*
+# Karta
+
+Stylizacja karty.
+
+## Styl Karty
+
+- Szerokość: 6vw.
+- Wysokość: 20vh.
+- Tło: #ebebeb.
+- Grubość ramki: 0.1vw, kolor: #ccc.
+- Zaokrąglenie rogów: 0.5vw.
+- Margines prawy: -6vw.
+- Kursor wskazujący.
+- Animacja transformacji: 0.2s.
+- Rozmiar czcionki: 5vh.
+- Padding: 1vh.
+
+markup:
+<div class="card" style="color: black;">5 <br> ♠ <br><div></div></div>
+
+Style guide: gameBoard.card
+    
+    */
+
+/*
+
+## Styl Karty po Fokusie lub Hoverze
+
+- Przesunięcie w prawo o 13px po fokusie lub hoverze.
+- Przesunięcie w górę o 1rem po hoverze.
+- Pierwsza karta nie ma marginesu z lewej strony.
+
+Style guide: gameBoard.card:focus-within~.card, gameBoard.card:hover~.card, gameBoard.card:hover
+*/
+
+.card {
+    width: 6vw;
+    height: 20vh;
+    background-color: #ebebeb;
+    border: 0.1vw solid #ccc;
+    border-radius: 0.5vw;
+    margin-right: -6vw;
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-size: 5vh;
+    padding: 1vh;
+}
+
+.card:focus-within~.card, .card:hover~.card {
+    transform: translateX(13px);
+}
+
+.card:hover {
+    transform: translateY(-1rem);
+}
+
+.card:not(:first-child) {
+    margin-left: -13px;
+}
+
+/*
+# Karta Odwrócona
+
+Stylizacja odwróconej karty.
+
+## Styl Odwróconej Karty
+
+- Szerokość: 6vw.
+- Wysokość: 20vh.
+- Tło gradientowe: od #5120ff do #b11515.
+- Grubość ramki: 0.1vw, kolor: #ccc.
+- Zaokrąglenie rogów: 0.5vw.
+- Margines prawy: -6vw.
+- Kursor wskazujący.
+- Animacja transformacji: 0.2s.
+- Rozmiar czcionki: 5vh.
+- Padding: 1vh.
+- Wyśrodkowanie tekstu.
+
+markup:
+<div class="reversedCard">&#1421;</div>
+
+Style guide: gameBoard.reversed-card
+
+*/
+
+/*
+
+## Styl Odwróconej Karty po Hoverze
+
+- Przesunięcie w górę o 1vh po hoverze.
+
+Style guide: gameBoard.reversed-card:hover
+*/
+
+.reversedCard {
+    width: 6vw;
+    height: 20vh;
+    background: linear-gradient(45deg, #5120ff , #b11515 );
+    border: 0.1vw solid #ccc;
+    border-radius: 0.5vw;
+    margin-right: -6vw;
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-size: 5vh;
+    padding: 1vh;
+    text-align: center;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card:hover {
+    transform: translateY(-1vh);
+}
+
+/*
+# Aktualny Gracz
+
+Podświetlenie ramki dla aktualnego gracza.
+
+## Styl Aktualnego Gracza
+
+- Grubość ramki: 0.1vw, kolor: #fff.
+
+Style guide: gameBoard.current-player
+*/
+
+.current-player {
+    border: 0.1vw solid #fff;
+}
+
+/*
+# Modalność
+
+Okna modalne dla koloru i wartości kart.
+
+## Styl Modalności
+
+- Pozycja: fixed, na całą szerokość i wysokość ekranu.
+- Tło półprzezroczyste czarne.
+- Wyświetlanie w siatce 2x2, z odstępem.
+
+Style guide: modalWindow.modal
+*/
+
+/*
+
+
+## Styl Opcji Koloru i Wartości
+
+- Szerokość: 30vw.
+- Wysokość: 30vh.
+- Tło: #fff.
+- Zaokrąglenie rogów: 0.5vw.
+- Padding: 2vh.
+- Wyśrodkowanie tekstu.
+- Opcja podświetla się po najechaniu.
+
+Style guide: modalWindow.modal-option
+
+*/
+
+.suit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2vh;
+    justify-items: center;
+    align-items: center;
+    z-index: 100;
+    font-size: 20vh;    
+}
+
+.suit-modal .suit-option {
+    width: 30vw;
+    height: 30vh;
+    background-color: #fff;
+    border-radius: 0.5vw;
+    padding: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.suit-modal .suit-option:hover {
+    background-color: #ebebeb;
+    cursor: pointer;
+}
+
+/*
+# Message Modal
+
+Modalne okno komunikatów.
+
+## Styl Message Modal
+
+- Pozycja: fixed, na całą szerokość i wysokość ekranu.
+- Tło: półprzezroczyste czarne.
+
+Style guide: modalWindow.message-modal
+*/
+
+/*
+
+
+## Styl Komunikatu
+
+- Kolor tekstu: #fff.
+- Wyśrodkowanie tekstu.
+- Rozmiar czcionki: 5vh.
+
+Style guide: modalWindow.message
+*/
+
+.message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    font-size: 5vh;
+}
+
+/*
+# Value Modal
+
+Modalne okno wyboru wartości.
+
+## Styl Value Modal
+
+- Pozycja: fixed, na całą szerokość i wysokość ekranu.
+- Tło: półprzezroczyste czarne.
+- Układ siatki: 2 kolumny, 5 wierszy.
+- Odstęp między elementami: 2vh.
+- Wyśrodkowanie zawartości.
+
+Style guide: modalWindow.value-modal
+*/
+
+/*
+
+## Styl Opcji Wartości
+
+- Szerokość: 30vw.
+- Wysokość: 30vh.
+- Tło: #fff.
+- Zaokrąglenie rogów: 0.5vw.
+- Padding: 2vh.
+- Wyśrodkowanie zawartości.
+
+Style guide: modalWindow.value-option
+*/
+
+
+/*
+## Styl Hover dla Opcji Wartości
+
+- Tło: #ebebeb.
+- Kursor wskazujący.
+
+Style guide: modalWindow.value-option:hover
+*/
+
+.value-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 2vh;
+    justify-items: center;
+    align-items: center;
+    z-index: 100;
+    font-size: 20vh;
+}
+
+.value-modal .value-option {
+    width: 30vw;
+    height: 30vh;
+    background-color: #fff;
+    border-radius: 0.5vw;
+    padding: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.value-modal .value-option:hover {
+    background-color: #ebebeb;
+    cursor: pointer;
+}
+
+/* 
+Media Query dla Małych Ekranów (maksymalna szerokość: 600px)
+
+## Styl Body
+
+- Rozmiar czcionki: 16px.
+
+Style guide: mediaQuery.body
+    
+    */
+
+/*
+
+## Styl Game Container na Małych Ekranach
+
+- Maksymalna szerokość: 90vw.
+- Padding: 1vh.
+
+Style guide: mediaQuery.game-container
+*/
+
+/*
+
+## Styl Kart i Odwróconych Kart na Małych Ekranach
+
+- Szerokość: 20vw.
+- Wysokość: 18vh.
+- Brak marginesu po prawej stronie.
+- Rozmiar czcionki: 3vh.
+- Padding: 0.5vh.
+
+Style guide: mediaQuery.card, mediaQuery.reversed-card
+*/
+
+
+/*
+## Styl Opcji Sztuki i Wartości na Małych Ekranach
+
+- Szerokość: 40vw.
+- Wysokość: 25vh.
+
+
+Style guide: mediaQuery.suit-modal .suit-option, mediaQuery.value-modal .value-option
+*/
+
+/*
+
+## Styl Board na Małych Ekranach
+
+- Wyświetlanie jako kolumna.
+
+Style guide: mediaQuery.board
+ */
+
+
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+
+    #game-container {
+        max-width: 90vw;
+        padding: 1vh;
+    }
+
+    .card,
+    .reversedCard {
+        width: 20vw;
+        height: 18vh;
+        margin-right: 0vw;
+        font-size: 3vh;
+        padding: 0.5vh;
+    }
+
+    .suit-modal .suit-option,
+    .value-modal .value-option {
+        width: 40vw;
+        height: 25vh;
+    }
+
+    #board {
+        display: flex;
+        flex-direction: column;
+    }
+}
