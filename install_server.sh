@@ -31,8 +31,23 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Katalog źródłowy (gdzie użytkownik sklonował repo)
-# Można przekazać jako argument, domyślnie bieżący katalog
-SOURCE_DIR="${1:-$(pwd)}"
+# Logika argumentów:
+# - Brak argumentów: użyj bieżącego katalogu
+# - Pierwszy argument "1" lub "yes": użyj bieżącego katalogu + włącz socat
+# - Pierwszy argument to ścieżka: użyj tej ścieżki, drugi argument to opcjonalna flaga socat
+if [ -z "$1" ]; then
+    # Brak argumentów - użyj bieżącego katalogu
+    SOURCE_DIR="$(pwd)"
+    USE_SOCAT=""
+elif [ "$1" = "1" ] || [ "$1" = "yes" ]; then
+    # Pierwszy argument to flaga socat - użyj bieżącego katalogu
+    SOURCE_DIR="$(pwd)"
+    USE_SOCAT="1"
+else
+    # Pierwszy argument to ścieżka
+    SOURCE_DIR="$1"
+    USE_SOCAT="${2:-}"
+fi
 
 # Sprawdź czy katalog źródłowy istnieje
 if [ ! -d "$SOURCE_DIR" ]; then
@@ -44,8 +59,11 @@ fi
 if [ ! -f "$SOURCE_DIR/index.html" ]; then
     log_error "Nie znaleziono pliku index.html w katalogu: $SOURCE_DIR"
     log_info "Upewnij się, że sklonowałeś repozytorium i jesteś w odpowiednim katalogu"
-    log_info "Użycie: sudo ./install_server.sh [KATALOG_Z_REPO]"
-    log_info "Przykład: sudo ./install_server.sh /home/uzytkownik/makao"
+    log_info "Użycie:"
+    log_info "  sudo ./install_server.sh              # z bieżącego katalogu"
+    log_info "  sudo ./install_server.sh 1            # z bieżącego katalogu + socat"
+    log_info "  sudo ./install_server.sh [KATALOG]    # z podanego katalogu"
+    log_info "  sudo ./install_server.sh [KATALOG] 1  # z podanego katalogu + socat"
     exit 1
 fi
 
@@ -162,6 +180,28 @@ else
     exit 1
 fi
 
+# Opcjonalne: Konfiguracja socat jako proxy (przydatne gdy VirtualBox port forwarding nie działa)
+# USE_SOCAT jest już ustawiony wcześniej w logice argumentów
+if [ "$USE_SOCAT" = "1" ] || [ "$USE_SOCAT" = "yes" ]; then
+    log_info "Konfiguruję socat jako proxy..."
+    
+    # Instalacja socat
+    if ! command -v socat &> /dev/null; then
+        log_info "Instaluję socat..."
+        apt-get install -y socat > /dev/null 2>&1
+    fi
+    
+    # Zatrzymaj istniejące procesy socat na porcie 8888
+    pkill -f "socat.*8888" 2>/dev/null || true
+    
+    # Uruchom socat jako proxy: port 8888 -> localhost:8080
+    nohup socat TCP-LISTEN:8888,fork,reuseaddr TCP:localhost:8080 > /dev/null 2>&1 &
+    
+    log_info "Socat proxy uruchomiony na porcie 8888 -> localhost:8080"
+    log_info "W VirtualBox skonfiguruj port forwarding: Host Port 9999 -> Guest Port 8888"
+    log_info "Następnie otwórz w przeglądarce: http://localhost:9999"
+fi
+
 # Wyświetlenie informacji o zakończeniu
 log_info "========================================="
 log_info "Instalacja zakończona pomyślnie!"
@@ -200,4 +240,11 @@ log_info "  1. cd $SOURCE_DIR"
 log_info "  2. git pull"
 log_info "  3. sudo cp -r $SOURCE_DIR/* $APP_DIR/"
 log_info "  4. sudo systemctl reload nginx"
+log_info ""
+log_info "Jeśli VirtualBox port forwarding nie działa bezpośrednio:"
+log_info "  Uruchom skrypt z flagą socat:"
+log_info "  sudo ./install_server.sh 1          # z bieżącego katalogu + socat"
+log_info "  sudo ./install_server.sh [KATALOG] 1 # z podanego katalogu + socat"
+log_info "  Następnie w VirtualBox: Host Port 9999 -> Guest Port 8888"
+log_info "  Otwórz w przeglądarce: http://localhost:9999"
 log_info "========================================="
