@@ -100,10 +100,11 @@ chmod -R 755 "$APP_DIR"
 log_info "Konfiguruję nginx..."
 
 # Tworzenie konfiguracji nginx
+# Używamy portu 8080, ponieważ port 80 jest zajęty przez Apache2 (OpenStack Horizon)
 cat > "/etc/nginx/sites-available/$NGINX_SITE" <<EOF
 server {
-    listen 80;
-    listen [::]:80;
+    listen 8080;
+    listen [::]:8080;
     
     server_name _;
     
@@ -165,18 +166,34 @@ fi
 log_info "========================================="
 log_info "Instalacja zakończona pomyślnie!"
 log_info "========================================="
+
+# Pobierz adres IP
+IP_ADDRESS=$(hostname -I | awk '{print $1}')
+
 log_info "Aplikacja jest dostępna pod adresem:"
-log_info "  http://$(hostname -I | awk '{print $1}')"
-log_info "  http://localhost"
+log_info "  http://$IP_ADDRESS:8080"
+log_info "  http://localhost:8080"
+log_info ""
+log_info "UWAGA: Port 80 jest zajęty przez Apache2 (OpenStack Horizon)"
+log_info "Aplikacja działa na porcie 8080"
+log_info ""
+log_info "Aby wyświetlić stronę:"
+log_info "  1. Z maszyny wirtualnej: otwórz przeglądarkę i wejdź na http://localhost:8080"
+log_info "  2. Z innego komputera w sieci lokalnej: http://$IP_ADDRESS:8080"
+log_info ""
+log_info "Aby sprawdzić adres IP maszyny:"
+log_info "  hostname -I"
+log_info "  lub"
+log_info "  ip addr show"
 log_info ""
 log_info "Katalog aplikacji: $APP_DIR"
 log_info "Konfiguracja nginx: /etc/nginx/sites-available/$NGINX_SITE"
 log_info ""
-log_info "Aby sprawdzić status nginx:"
-log_info "  sudo systemctl status nginx"
-log_info ""
-log_info "Aby zrestartować nginx:"
-log_info "  sudo systemctl restart nginx"
+log_info "Przydatne polecenia:"
+log_info "  Sprawdź status nginx:    sudo systemctl status nginx"
+log_info "  Zrestartuj nginx:        sudo systemctl restart nginx"
+log_info "  Sprawdź logi nginx:      sudo tail -f /var/log/nginx/makao_error.log"
+log_info "  Sprawdź logi dostępu:    sudo tail -f /var/log/nginx/makao_access.log"
 log_info ""
 log_info "Aby zaktualizować aplikację (po zmianach w repo):"
 log_info "  1. cd $SOURCE_DIR"
